@@ -39,12 +39,18 @@ func Default() *Config {
 			ShowLine:      true,
 			StacktraceKey: "",
 		},
+		JianjiaoInfo: Jianjiao{
+			AppCode:   "xxx",
+			AppKey:    "xxx",
+			AppSecret: "xxx",
+		},
 	}
 }
 
 type Config struct {
-	SystemInfo System `toml:"system"`
-	LogInfo    Log    `toml:"log"`
+	SystemInfo   System   `toml:"system"`
+	LogInfo      Log      `toml:"log"`
+	JianjiaoInfo Jianjiao `toml:"jianjiao"`
 }
 
 type System struct {
@@ -60,4 +66,10 @@ type Log struct {
 	Prefix        string
 	ShowLine      bool   `toml:"show-line"`
 	StacktraceKey string `toml:"stacktrace-key"`
+}
+
+type Jianjiao struct {
+	AppCode   string `toml:"app-code"`
+	AppKey    string `toml:"app-key"`
+	AppSecret string `toml:"app-secret"`
 }
