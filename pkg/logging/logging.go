@@ -143,7 +143,7 @@ func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 func GetWriteSyncer() (zapcore.WriteSyncer, error) {
 	fileWriter, err := zaprotatelogs.New(
 		path.Join(config.LogInfo.Director, "%Y-%m-%d.log"),
-		zaprotatelogs.WithLinkName(config.LogInfo.LinkName),
+		// zaprotatelogs.WithLinkName(config.LogInfo.LinkName),
 		zaprotatelogs.WithMaxAge(7*24*time.Hour),
 		zaprotatelogs.WithRotationTime(24*time.Hour),
 	)
