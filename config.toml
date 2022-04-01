@@ -1,4 +1,5 @@
 [system]
+verbose = false
 
 [log]
 director = "log" 
@@ -15,3 +16,7 @@ stacktrace-key = "" #key for stacktrace, space for no stacktrace
 app-code = "DEBC861AAC935A8C168F53CF0990067F"
 app-key = "AKID445463d641137eda25e06611b1143a77"
 app-secret = "e7001862c9b359ca9d3a9ec7cbb8d66c"
+
+[seckill]
+tk = "tk"
+user-agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"

@@ -27,7 +27,9 @@ func Init() error {
 
 func Default() *Config {
 	return &Config{
-		SystemInfo: System{},
+		SystemInfo: System{
+			Verbose: true,
+		},
 		LogInfo: Log{
 			Director:      "./log",
 			Level:         "debug",
@@ -44,6 +46,10 @@ func Default() *Config {
 			AppKey:    "xxx",
 			AppSecret: "xxx",
 		},
+		SeckillInfo: Seckill{
+			Tk:        "xxx",
+			UserAgent: "xxx",
+		},
 	}
 }
 
@@ -51,9 +57,11 @@ type Config struct {
 	SystemInfo   System   `toml:"system"`
 	LogInfo      Log      `toml:"log"`
 	JianjiaoInfo Jianjiao `toml:"jianjiao"`
+	SeckillInfo  Seckill  `toml:"seckill"`
 }
 
 type System struct {
+	Verbose bool `toml:"verbose"`
 }
 
 type Log struct {
@@ -72,4 +80,9 @@ type Jianjiao struct {
 	AppCode   string `toml:"app-code"`
 	AppKey    string `toml:"app-key"`
 	AppSecret string `toml:"app-secret"`
+}
+
+type Seckill struct {
+	Tk        string `toml:"tk"`
+	UserAgent string `toml:"user-agent"`
 }
