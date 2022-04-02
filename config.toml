@@ -18,5 +18,17 @@ app-key = "AKID445463d641137eda25e06611b1143a77"
 app-secret = "e7001862c9b359ca9d3a9ec7cbb8d66c"
 
 [seckill]
-tk = "tk"
-user-agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
+all-cities-url = "https://wx.healthych.com/base/region/childRegions.do" # 城市地址
+cities-code-url = "https://miaomiao.scmttec.com/base/region/childRegions.do" # 获取所有城市列表信息
+city = "成都" # 城市
+department-info-url = "https://wx.healthych.com/base/departmentVaccine/item.do" # 门诊地址
+department-name = "第一诊室" # 门诊名称
+department-url = "https://wx.healthych.com/base/department/getDepartments.do" # 门诊详情
+has-seckill-url = "https://miaomiao.scmttec.com/seckill/seckill/list.do" # 是否有秒杀
+login-url = "https://wx.healthych.com/passport/wx/login.do" # 登录
+province = "四川" # 省份
+tk = "tk" # 秒杀token
+user-agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_3 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10B329 micromessenger/5.0.1" 
+vaccines = "2" # "1"->2 "2"->4 "3"->9 价
+work-day-url = "https://wx.healthych.com/order/subscribe/workDays.do" # 当前门诊可用日期查询地址
+work-time-url = "https://wx.healthych.com/order/subscribe/departmentWorkTimes2.do" # 当前门诊可用时间查询地址

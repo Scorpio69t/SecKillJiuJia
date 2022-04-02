@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"seckill-jiujia/conf"
 	"seckill-jiujia/pkg/logging"
 
 	"go.uber.org/zap"
@@ -22,7 +21,7 @@ type Location struct {
 // GetProvinceCode 获取省份code
 func (s *SecKillService) GetProvinceCode() (string, error) {
 	res := Location{}
-	resp, err := s.Request.Get(conf.Conf.SeckillInfo.AllCitiesUrl, nil, nil)
+	resp, err := s.Request.Get(s.Config.AllCitiesUrl, nil, nil)
 	if err != nil {
 		logging.Error("get province code failed", zap.Error(err))
 		return "", err
@@ -34,7 +33,7 @@ func (s *SecKillService) GetProvinceCode() (string, error) {
 	}
 
 	for _, v := range res.Data {
-		if v.Name == conf.Conf.SeckillInfo.Province {
+		if v.Name == s.Config.Province {
 			return v.Value, nil
 		}
 	}
@@ -50,7 +49,7 @@ func (s *SecKillService) GetCityCode() (string, error) {
 	}
 
 	res := Location{}
-	resp, err := s.Request.Get(conf.Conf.SeckillInfo.AllCitiesUrl, map[string]string{"parentCode": provinceCode}, nil)
+	resp, err := s.Request.Get(s.Config.AllCitiesUrl, map[string]string{"parentCode": provinceCode}, nil)
 	if err != nil {
 		logging.Error("get city code failed", zap.Error(err))
 		return "", err
@@ -63,7 +62,7 @@ func (s *SecKillService) GetCityCode() (string, error) {
 	}
 
 	for _, v := range res.Data {
-		if v.Name == conf.Conf.SeckillInfo.City {
+		if v.Name == s.Config.City {
 			return v.Value, nil
 		}
 	}
@@ -76,7 +75,7 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 	city := Location{}
 	r := make(map[string]string)
 
-	resp, err := s.Request.Get(conf.Conf.SeckillInfo.CitiesCodeUrl, nil, nil)
+	resp, err := s.Request.Get(s.Config.CitiesCodeUrl, nil, nil)
 	if err != nil {
 		logging.Error("get province code failed", zap.Error(err))
 		return nil, err
@@ -88,7 +87,7 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 	}
 
 	for _, v := range province.Data {
-		resp2, err := s.Request.Get(conf.Conf.SeckillInfo.CitiesCodeUrl, map[string]string{"parentCode": v.Value}, nil)
+		resp2, err := s.Request.Get(s.Config.CitiesCodeUrl, map[string]string{"parentCode": v.Value}, nil)
 		if err != nil {
 			logging.Error("get city code failed", zap.Error(err))
 			return nil, err
@@ -106,4 +105,62 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 	}
 
 	return r, nil
+}
+
+type HasSeckill struct {
+	Code  string        `json:"code"`
+	Data  []interface{} `json:"data"`
+	Ok    bool          `json:"ok"`
+	NotOk bool          `json:"notOk"`
+}
+
+// GetSeckillCities 获取秒杀城市
+func (s *SecKillService) GetSeckillCities() ([]string, error) {
+	var res []string
+	cityCodes, err := s.GetAllCitiesCode()
+	if err != nil {
+		logging.Error("get all cities code failed", zap.Error(err))
+		return nil, err
+	}
+
+	for code, city := range cityCodes {
+		hasSeckill, err := s.hasSeckill(code)
+		if err != nil {
+			logging.Error("has seckill failed", zap.Error(err))
+			continue
+		}
+		if hasSeckill {
+			res = append(res, city)
+		}
+	}
+
+	return res, nil
+}
+
+// hasSeckill 是否有秒杀
+func (s *SecKillService) hasSeckill(code string) (bool, error) {
+	res := HasSeckill{}
+
+	params := map[string]string{
+		"regionCode": code,
+		"offset":     "0",
+		"limit":      "10",
+	}
+	resp, err := s.Request.Get(s.Config.HasSeckillUrl, params, nil)
+	if err != nil {
+		logging.Error("get seckill city failed", zap.Error(err))
+		return false, err
+	}
+
+	err = json.Unmarshal(resp, &res)
+	if err != nil {
+		logging.Error("unmarshal response body failed", zap.Error(err), zap.Any("body", resp))
+		return false, err
+	}
+
+	if len(res.Data) > 0 {
+		return true, nil
+	}
+
+	return false, nil
 }

@@ -7,6 +7,8 @@ require (
 	github.com/BurntSushi/toml v1.0.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
+	github.com/pkg/errors v0.8.1
+	github.com/robfig/cron/v3 v3.0.1
 	go.uber.org/zap v1.21.0
 )
 
@@ -17,7 +19,6 @@ require (
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
-	github.com/pkg/errors v0.8.1 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/net v0.0.0-20211029224645-99673261e6eb // indirect

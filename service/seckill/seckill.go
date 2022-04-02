@@ -6,15 +6,17 @@ import (
 
 type SecKillService struct {
 	Request *Request
+	Config  conf.Seckill
 }
 
-func New() (*SecKillService, error) {
+func New(config conf.Seckill) (*SecKillService, error) {
 	headers := make(map[string]string)
-	headers["User-Agent"] = conf.Conf.SeckillInfo.UserAgent
-	headers["tk"] = conf.Conf.SeckillInfo.Tk
+	headers["User-Agent"] = config.UserAgent
+	headers["tk"] = config.Tk
 
 	req := NewRequest(conf.Conf.SystemInfo.Verbose, headers)
 	return &SecKillService{
 		Request: req,
+		Config:  config,
 	}, nil
 }
