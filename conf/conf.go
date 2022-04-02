@@ -37,7 +37,7 @@ func Default() *Config {
 			Format:        "text",
 			LinkName:      "lastest_log",
 			LogConsole:    true,
-			Prefix:        "[OrderService]",
+			Prefix:        "[SecKillJiujia]",
 			ShowLine:      true,
 			StacktraceKey: "",
 		},

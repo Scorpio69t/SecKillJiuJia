@@ -2,14 +2,15 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"math/rand"
 	"runtime"
 	"seckill-jiujia/conf"
 	"seckill-jiujia/pkg/logging"
+	"seckill-jiujia/service/seckill"
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
-	"go.uber.org/zap"
 )
 
 func main() {
@@ -36,5 +37,20 @@ func main() {
 
 	survey.AskOne(prompt, &platform)
 
-	logging.Info("Welcome to use", zap.String("platform", platform))
+	switch platform {
+	case "seckill":
+		s, err := seckill.NewSecKillService(conf.Conf.SeckillInfo)
+		if err != nil {
+			panic(err)
+		}
+		cities, err := s.GetSeckillCities()
+		if err != nil {
+			panic(err)
+		}
+		for _, city := range cities {
+			fmt.Println(city)
+		}
+	default:
+		fmt.Println("not support platform")
+	}
 }

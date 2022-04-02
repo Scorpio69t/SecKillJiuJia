@@ -9,7 +9,7 @@ type SecKillService struct {
 	Config  conf.Seckill
 }
 
-func New(config conf.Seckill) (*SecKillService, error) {
+func NewSecKillService(config conf.Seckill) (*SecKillService, error) {
 	headers := make(map[string]string)
 	headers["User-Agent"] = config.UserAgent
 	headers["tk"] = config.Tk

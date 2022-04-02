@@ -8,7 +8,7 @@ format = "text" # text,json
 level = "debug" # debug,info,warn,error,dpanic,panic,fatal
 # link-name = "lastest_log" 
 log-console = true 
-prefix = "[OrderService]" 
+prefix = "[SecKillJiujia]" 
 show-line = true 
 stacktrace-key = "" #key for stacktrace, space for no stacktrace
 

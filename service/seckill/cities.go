@@ -101,6 +101,7 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 
 		for _, v2 := range city.Data {
 			r[v2.Value] = fmt.Sprintf("%s-%s", v.Name, v2.Name)
+			logging.Info("city code", zap.String("code", v2.Value), zap.String("city", fmt.Sprintf("%s-%s", v.Name, v2.Name)))
 		}
 	}
 
