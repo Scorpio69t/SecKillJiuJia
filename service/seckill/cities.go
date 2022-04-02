@@ -76,7 +76,7 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 	city := Location{}
 	r := make(map[string]string)
 
-	resp, err := s.Request.Get(conf.Conf.SeckillInfo.AllCitiesUrl, nil, nil)
+	resp, err := s.Request.Get(conf.Conf.SeckillInfo.CitiesCodeUrl, nil, nil)
 	if err != nil {
 		logging.Error("get province code failed", zap.Error(err))
 		return nil, err
@@ -88,7 +88,7 @@ func (s *SecKillService) GetAllCitiesCode() (map[string]string, error) {
 	}
 
 	for _, v := range province.Data {
-		resp2, err := s.Request.Get(conf.Conf.SeckillInfo.AllCitiesUrl, map[string]string{"parentCode": v.Value}, nil)
+		resp2, err := s.Request.Get(conf.Conf.SeckillInfo.CitiesCodeUrl, map[string]string{"parentCode": v.Value}, nil)
 		if err != nil {
 			logging.Error("get city code failed", zap.Error(err))
 			return nil, err
